@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 05, 2026 at 11:50 AM
+-- Generation Time: Jun 05, 2026 at 12:16 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `rumah_sakit`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cetakKlaimLayanan` (IN `p_id_pasien` INT)   BEGIN
+    SELECT
+        id_pasien,
+        nama,
+        usia,
+        lamaRawat,
+        biayaKamarPerHari,
+        hitungTotalBiaya(lamaRawat, biayaKamarPerHari) AS total_biaya
+    FROM BPJS
+    WHERE id_pasien = p_id_pasien;
+END$$
+
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `hitungTotalBiaya` (`p_lamaRawat` INT, `p_biayaKamarPerHari` DECIMAL(12,2)) RETURNS DECIMAL(15,2) DETERMINISTIC BEGIN
+    RETURN p_lamaRawat * p_biayaKamarPerHari;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
