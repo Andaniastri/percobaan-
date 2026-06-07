@@ -1,6 +1,6 @@
 # 🏥 Sistem Backend Manajemen Layanan Medis & BPJS Rumah Sakit
 
-Projek ini merupakan aplikasi backend berbasis web menggunakan **PHP Native (OOP)** murni yang terintegrasi dengan basis data **MySQL** Sistem ini dirancang untuk mengelola data rekam medis pasien rawat inap serta melakukan kalkulasi otomatis terhadap total tagihan mandiri pasien berdasarkan karakteristik dari masing-masing klaster penjamin[cite: 15].
+Projek ini merupakan aplikasi backend berbasis web menggunakan **PHP Native (OOP)** murni yang terintegrasi dengan basis data **MySQL** Sistem ini dirancang untuk mengelola data rekam medis pasien rawat inap serta melakukan kalkulasi otomatis terhadap total tagihan mandiri pasien berdasarkan karakteristik dari masing-masing klaster penjamin.
 
 Projek ini disusun untuk memenuhi tugas besar kolaboratif pada mata kuliah Pemrograman Berorientasi Objek (PBO) — Semester 2.
 
@@ -25,18 +25,18 @@ Berikut adalah daftar anggota kelompok beserta kolom peran dan tugas yang dapat 
 Sistem ini merepresentasikan 4 pilar utama Pemrograman Berorientasi Objek secara konkrit di dalam berkas kode program:
 
 ### 1. Abstraction (Abstraksi)
-Diterapkan dengan membuat `abstract class Pasien` yang tidak dapat diinstansiasi langsung. Kelas ini bertindak sebagai kerangka induk untuk mendeklarasikan metode abstrak `hitungTotalBiaya()` dan metode kontrak visual lainnya yang wajib diturunkan dan diimplementasikan secara spesifik oleh setiap sub-class[cite: 16].
+Diterapkan dengan membuat `abstract class Pasien` yang tidak dapat diinstansiasi langsung. Kelas ini bertindak sebagai kerangka induk untuk mendeklarasikan metode abstrak `hitungTotalBiaya()` dan metode kontrak visual lainnya yang wajib diturunkan dan diimplementasikan secara spesifik oleh setiap sub-class.
 
 ### 2. Inheritance (Pewarisan)
-Pilar pewarisan diimplementasikan menggunakan kata kunci `extends`, di mana kelas `PasienBPJS`, `PasienAsuransiSwasta`, dan `PasienUmum` mewarisi properti dasar (seperti `idPasien`, `nama`, `usia`, `lamaRawat`, `biayaPerHari`) yang dideklarasikan pada kelas induk `Pasien`[cite: 16, 17].
+Pilar pewarisan diimplementasikan menggunakan kata kunci `extends`, di mana kelas `PasienBPJS`, `PasienAsuransiSwasta`, dan `PasienUmum` mewarisi properti dasar (seperti `idPasien`, `nama`, `usia`, `lamaRawat`, `biayaPerHari`) yang dideklarasikan pada kelas induk `Pasien`.
 
 ### 3. Encapsulation (Enkapsulasi)
-Seluruh properti inti pada kelas induk diamankan menggunakan *access modifier* `protected` agar hanya dapat diakses secara internal oleh kelas anak. Atribut-atribut spesifik penjamin pada kelas anak (seperti `nomorPBI`, `nomorPolis`, atau `nik`) diisolasi secara ketat menggunakan dekorator `private` untuk mencegah manipulasi data dari luar kelas[cite: 17, 36].
+Seluruh properti inti pada kelas induk diamankan menggunakan *access modifier* `protected` agar hanya dapat diakses secara internal oleh kelas anak. Atribut-atribut spesifik penjamin pada kelas anak (seperti `nomorPBI`, `nomorPolis`, atau `nik`) diisolasi secara ketat menggunakan dekorator `private` untuk mencegah manipulasi data dari luar kelas.
 
 ### 4. Polymorphism (Polimorfisme)
-Polimorfisme diwujudkan melalui mekanisme **Method Overriding**, di mana masing-masing sub-class mengimplementasikan aturan logika rumus perhitungan biaya mandiri yang berbeda saat runtime (*Dynamic Binding*)[cite: 27, 39]:
+Polimorfisme diwujudkan melalui mekanisme **Method Overriding**, di mana masing-masing sub-class mengimplementasikan aturan logika rumus perhitungan biaya mandiri yang berbeda saat runtime (*Dynamic Binding*):
 **Pasien BPJS**: Menanggung **10%** dari total tarif dasar kamar karena adanya subsidi sebesar 90%.
-**Pasien Asuransi Swasta**: Hanya membayar sisa selisih biaya rawat inap apabila total tarif melebihi batas `limitCover` jaminan. Jika tidak melebihi limit, total biaya mandiri bernilai **Rp 0**[cite: 18, 19].
+**Pasien Asuransi Swasta**: Hanya membayar sisa selisih biaya rawat inap apabila total tarif melebihi batas `limitCover` jaminan. Jika tidak melebihi limit, total biaya mandiri bernilai **Rp 0**.
 **Pasien Umum / Mandiri**: Menanggung tarif rawat inap secara penuh ditambah dengan **Biaya Administrasi Tambahan tetap sebesar Rp 150.000**.
 
 ---
@@ -51,7 +51,7 @@ Polimorfisme diwujudkan melalui mekanisme **Method Overriding**, di mana masing-
 
 Struktur tabel di dalam database menggunakan pendekatan relasi **1:1 (Class Table Inheritance)** untuk memetakan objek warisan ke dalam tabel relasional:
 Tabel `pasien` menyimpan data demografi dan rekam medis dasar dari seluruh entitas pasien.
-Tabel `pasien_bpjs`, `pasien_asuransi_swasta`, dan `pasien_umum` menyimpan field-field atribut spesifik dan dihubungkan kembali ke tabel induk menggunakan batasan kunci tamu (*Foreign Key Constraints*) yang merujuk pada `id_pasien`[cite: 17, 31].
+Tabel `pasien_bpjs`, `pasien_asuransi_swasta`, dan `pasien_umum` menyimpan field-field atribut spesifik dan dihubungkan kembali ke tabel induk menggunakan batasan kunci tamu (*Foreign Key Constraints*) yang merujuk pada `id_pasien`.
 
 ---
 
@@ -66,7 +66,7 @@ Tabel `pasien_bpjs`, `pasien_asuransi_swasta`, dan `pasien_umum` menyimpan field
     ```bash
     C:\laragon\www\sistem-manajemen-rs\
     ```
-2.  Buku utilitas database penyedia Anda (HeidiSQL / phpMyAdmin), buat database baru bernama `rumah_sakit`, kemudian lakukan **Import** terhadap berkas database cadangan yang terletak di `database/rumah_sakit.sql`[cite: 32].
+2.  Buku utilitas database penyedia Anda (HeidiSQL / phpMyAdmin), buat database baru bernama `rumah_sakit`, kemudian lakukan **Import** terhadap berkas database cadangan yang terletak di `database/rumah_sakit.sql`.
 3.  Sesuaikan parameter akun kredensial akses basis data pada file `koneksi.php` dengan setelan server lokal Anda.
 4.  Jalankan modul pengujian melalui penjelajah web Anda:
     * **Dashboard Utama (Kalkulasi Polimorfik):** `http://localhost/sistem-manajemen-rs/index.php`
